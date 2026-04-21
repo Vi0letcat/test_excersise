@@ -6,9 +6,9 @@ class DownloadPageLocators(BasePageLocators):
     pass
 
 class DownloadPage(BasePage):
-    def __init__(self, driver):
+    def __init__(self, driver, base_url):
         self.driver = driver
-        self.url = "https://trueconf.ru/downloads/"
+        self.url = f"{base_url}downloads/"
         self.locators = DownloadPageLocators()
     
     def open(self):

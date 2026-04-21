@@ -7,6 +7,12 @@ from pages.download_page import DownloadPage
 import random
 import string
 
+BASE_URL = "https://trueconf.ru/" 
+
+@pytest.fixture(scope="session")
+def base_url():
+    return BASE_URL
+
 @pytest.fixture(scope="session")
 def driver():
     driver = webdriver.Chrome()
@@ -14,16 +20,12 @@ def driver():
     driver.quit()
 
 @pytest.fixture()
-def base_page(driver):
-    return BasePage(driver)
+def registration_page(driver, base_url):
+    return RegistrationPage(driver, base_url)
 
 @pytest.fixture()
-def registration_page(driver):
-    return RegistrationPage(driver)
-
-@pytest.fixture()
-def auth_page(driver):
-    return AuthPage(driver)
+def auth_page(driver, base_url):
+    return AuthPage(driver, base_url)
 
 @pytest.fixture(scope="session", autouse=True)
 def random_string():
@@ -31,8 +33,8 @@ def random_string():
     return ''.join(random.choice(letters) for i in range(5))
 
 @pytest.fixture()
-def download_page(driver):
-    return DownloadPage(driver)
+def download_page(driver, base_url):
+    return DownloadPage(driver, base_url)
 
 @pytest.fixture(scope="session")
 def random_user_id(random_string):

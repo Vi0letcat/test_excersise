@@ -8,9 +8,9 @@ class AuthPageLocators(BasePageLocators):
     submit_button = (By.CSS_SELECTOR, "button[type='submit']")
 
 class AuthPage(BasePage):
-    def __init__(self, driver):
+    def __init__(self, driver, base_url):
         self.driver = driver
-        self.url = "https://trueconf.ru/login.html"
+        self.url = f"{base_url}login.html"
         self.locators = AuthPageLocators()
     
     def open(self):

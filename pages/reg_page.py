@@ -12,9 +12,9 @@ class RegistrationPageLocators(BasePageLocators):
     submit_button = (By.ID, "submit_registration")
 
 class RegistrationPage(BasePage):
-    def __init__(self, driver):
+    def __init__(self, driver, base_url):
         self.driver = driver
-        self.url = "https://trueconf.com/products/online/registration-standard.html"
+        self.url = f"{base_url}products/online/registration-standard.html"
         self.locators = RegistrationPageLocators()
     
     def open(self):
