@@ -1,5 +1,4 @@
 import pytest
-import subprocess
 from time import sleep
 from selenium.webdriver.common.by import By
 
