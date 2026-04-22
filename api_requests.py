@@ -49,6 +49,7 @@ class APIRequests:
     def create_user(self, name: str, password: str, email: str):
         url = f"{self.base_url}{self.request_users}?access_token={self.api_key}"
         request_body = {
+            "id": name,
             "password": password,
             "email": email,
             "login_name": name
