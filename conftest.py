@@ -4,7 +4,7 @@ from pages.main_page import MainPage
 from pages.reg_page import RegistrationPage
 from pages.auth_page import AuthPage
 from pages.download_page import DownloadPage
-from requests import APIRequests
+from api_requests import APIRequests
 import random
 import string
 
@@ -59,7 +59,7 @@ def random_string():
     return ''.join(random.choice(letters) for i in range(5))
 
 @pytest.fixture(scope="class")
-def random_string_cls():
+def random_string_cls(): # отдельная фикстура со скоупом на класс, чтобы тест авторизации проходил под тем же юзером что был созхдан в тесте регистрации
     letters = string.ascii_letters
     return ''.join(random.choice(letters) for i in range(5))
 

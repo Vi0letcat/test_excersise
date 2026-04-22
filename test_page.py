@@ -5,7 +5,7 @@ from time import sleep
 
 class TestTrueConf:
     def test_open_page(self, main_page):
-        main_page.wait_until_element_is_visible(*main_page.locators.header_menu)
+        main_page.wait_until_element_is_visible(*main_page.locators.header_menu) # проверяем что появилась менюшка. для smoke вполне достаточно как факт открытия страницы.
 
     @pytest.mark.dependency(name='registration')
     def test_registration(self, registration_page, random_string_cls):
@@ -19,6 +19,8 @@ class TestTrueConf:
         registration_page.wait_until_element_is_visible(*registration_page.locators.header_username)
         registration_page.check_element_text_equals(*registration_page.locators.header_username, expected_text=f"Test Name {random_string_cls}")
 
+    # Использован моуль pytest-dependency, чтобы тест пропускался если юзер не создан.
+    # Либо можно создать тестового юзера фикстурой, например инсёром в БД, но у меня такого доступа нет.
     @pytest.mark.dependency(name='auth', depends=['registration'])
     def test_auth(self, auth_page, random_string_cls):
         auth_page.auth(id = f"test_user_{random_string_cls}", password = f"password_{random_string_cls}")
@@ -29,14 +31,13 @@ class TestTrueConf:
         ("Windows", "windows",  "Windows"),
         ("macOS", "mac", "macOS"),
         ("Linux", "linux", "Linux"),
-        ("iOS", "ios", "Видеозвонки и конференции"),
+        ("iOS", "ios", "Видеозвонки и конференции"), # На странице iOS нет упоминания iOS в заголовке. Возможно это не лучший вариант для проверки.
         ("Android", "android", "Android"),
         ("Аврора", "avrora", "Аврора"),
         ("Android TV", "android-tv", "Android TV"),
         ("Браузеры", "web-client", "браузера")
     ])
     def test_download_options(self, download_page, title, expected_url, expected_text):
-        download_page.open()
-        download_page.find_element(By.XPATH, f"//a/span[text()='{title}']").click()
-        download_page.check_url_contains(expected_url)
-        download_page.check_element_text_contains(*download_page.locators.version_page_header, expected_text=expected_text)
+        download_page.find_element(By.XPATH, f"//a/span[text()='{title}']").click() # Ищем элемент с заголовкам ОС/среды. Ошибка если не находим, кликаем если находим.
+        download_page.check_url_contains(expected_url) # Проверяем урл
+        download_page.check_element_text_contains(*download_page.locators.version_page_header, expected_text=expected_text) # Проверяем что текст на странице соответсвует выбранному варианту
