@@ -41,3 +41,13 @@ class TestTrueConf:
         download_page.find_element(By.XPATH, f"//a/span[text()='{title}']").click() # Ищем элемент с заголовкам ОС/среды. Ошибка если не находим, кликаем если находим.
         download_page.check_url_contains(expected_url) # Проверяем урл
         download_page.check_element_text_contains(*download_page.locators.version_page_header, expected_text=expected_text) # Проверяем что текст на странице соответсвует выбранному варианту
+    
+    def test_access_download_page_from_main(self, main_page):
+        '''
+        ТЗ гласило "С главной страницы, переходя на скачивание, убедиться в наличии 7 вариантов установки
+        В моём понимании тесты должны работать отдельно друг от друга, и если это тест проверки контента, то проверять переход туда в нём же не нужно
+        Но на всякий случай вот тест перехода на старницу загрузок с главной
+        ''' 
+        main_page.wait_until_element_is_visible(*main_page.locators.download_button_popup).click()
+        main_page.wait_until_element_is_visible(*main_page.locators.download_button_desktop).click()
+        main_page.check_url_contains("downloads")

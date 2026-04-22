@@ -5,6 +5,8 @@ from selenium.webdriver.support import expected_conditions as EC
 class BasePageLocators:
     header_username = (By.CSS_SELECTOR, ".header-menu__btn-text--user-name")
     header_menu = (By.CSS_SELECTOR, ".header-menu")
+    download_button_popup = (By.ID, "hm-sbtn-1")
+    download_button_desktop = (By.CSS_SELECTOR, ".header-menu__container--applications-desktop .header-menu__card--m")
 
 class BasePage:
     def __init__(self, driver, base_url):
@@ -19,7 +21,7 @@ class BasePage:
         return WebDriverWait(self.driver, timeout).until(EC.presence_of_element_located(locator), message=f"Can't find element by locator {locator}")
 
     def wait_until_element_is_visible(self, *locator, timeout=10):
-            WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator), message=f"Element with locator {locator} is not visible after {timeout} seconds")
+        return WebDriverWait(self.driver, timeout).until(EC.visibility_of_element_located(locator), message=f"Element with locator {locator} is not visible after {timeout} seconds")
 
     def check_url_contains(self, expected_substring: str, timeout=10):
         WebDriverWait(self.driver, timeout).until(EC.url_contains(expected_substring), message=f"URL does not contain '{expected_substring}' after {timeout} seconds")
