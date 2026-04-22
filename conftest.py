@@ -19,7 +19,7 @@ def pytest_addoption(parser):
 def base_url(request):
     return request.config.getoption("--addr")
 
-@pytest.fixture(scope="class")
+@pytest.fixture(scope="session")
 def api_requests():
     return APIRequests()
 

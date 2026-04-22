@@ -9,7 +9,7 @@ class APIRequests:
         self.key_request_address = r"C:\Program Files\TrueConf Server\tc_regkey.exe"
         self.request_users = "users"
         self.request_conferences = "conferences"
-        self.api_key = self.get_api_key()
+        self.api_key = self.get_api_key() # методы не статичные, чтобы фикстурой создавался инстанс на всю сессию, который будет хранить в себе ключ. Чтобы не долбить каждый раз tc_regkey.exe
         
     def get_api_key(self):
         command =  [self.key_request_address,"get","Configuration","Status Security",]
