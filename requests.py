@@ -2,7 +2,7 @@ import json
 import subprocess
 
 
-class Requests:
+class APIRequests:
 
     def __init__(self):
         self.base_url = "https://localhost/api/v3.11/"

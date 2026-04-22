@@ -3,7 +3,7 @@ from pages.base_page import BasePageLocators
 from selenium.webdriver.common.by import By
 
 class DownloadPageLocators(BasePageLocators):
-    pass
+    version_page_header = (By.CSS_SELECTOR, ".ui-container h1")
 
 class DownloadPage(BasePage):
     def __init__(self, driver, base_url):

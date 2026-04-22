@@ -4,11 +4,12 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class BasePageLocators:
     header_username = (By.CSS_SELECTOR, ".header-menu__btn-text--user-name")
+    header_menu = (By.CSS_SELECTOR, ".header-menu")
 
 class BasePage:
-    def __init__(self, driver):
+    def __init__(self, driver, base_url):
         self.driver = driver
-        self.base_url = "https://trueconf.ru/"
+        self.base_url = base_url
         self.locators = BasePageLocators()
 
     def open(self):
@@ -27,11 +28,6 @@ class BasePage:
         input_element = self.find_element(*locator)
         input_element.clear()
         input_element.send_keys(value)
-    
-    def select_checkbox(self, *locator):
-        checkbox = self.find_element(*locator)
-        if not checkbox.is_selected():
-            checkbox.click()
 
     def click_button(self, *locator):
         button = self.find_element(*locator)
@@ -40,3 +36,14 @@ class BasePage:
     def check_element_text_equals(self, *locator, expected_text: str):
         element = self.find_element(*locator)
         assert element.text == expected_text, f"Expected text '{expected_text}' but got '{element.text}'"
+
+    def check_element_text_contains(self, *locator, expected_text: str):
+        element = self.find_element(*locator)
+        assert expected_text in element.text, f"Expected text '{expected_text}' but got '{element.text}'"
+
+    def js_click(self, element):
+        self.driver.execute_script("arguments[0].click();", element)
+    
+    def select_checkbox(self, *locator):
+        checkbox = self.find_element(*locator)
+        self.js_click(checkbox)

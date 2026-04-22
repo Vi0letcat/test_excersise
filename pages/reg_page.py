@@ -6,10 +6,10 @@ class RegistrationPageLocators(BasePageLocators):
     id_input = (By.ID, "person-reg-login")
     email_input = (By.ID, "person-reg-email")
     password_input = (By.ID, "person-reg-password")
-    full_name_input = (By.ID, "person-reg-full-name")
+    full_name_input = (By.ID, "person-reg-full_name")
     privacy_policy_checkbox = (By.ID, "person-reg-privacy_policy")
     agreement_checkbox = (By.ID, "person-reg-personal_data_processing_consent_checkbox")
-    submit_button = (By.ID, "submit_registration")
+    submit_button = (By.CSS_SELECTOR, ".registration .waves-button-input")
 
 class RegistrationPage(BasePage):
     def __init__(self, driver, base_url):
@@ -27,4 +27,4 @@ class RegistrationPage(BasePage):
         self.fill_input(*self.locators.full_name_input, value=full_name)
         self.select_checkbox(*self.locators.privacy_policy_checkbox)
         self.select_checkbox(*self.locators.agreement_checkbox)
-        self.click_button(*self.locators.submit_button)
+        self.js_click(self.find_element(*self.locators.submit_button))
