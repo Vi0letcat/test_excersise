@@ -22,7 +22,9 @@ class BasePage:
     def open(self):
         self.driver.get(self.base_url)
 
-    def wait_and_find_element(self, *locator, timeout=10): # вместо обычного driver.find_element(), чтобы ждать пока страница загрузится.
+    def wait_and_find_element(
+        self, *locator, timeout=10
+    ):  # вместо обычного driver.find_element(), чтобы ждать пока страница загрузится.
         return WebDriverWait(self.driver, timeout).until(
             EC.presence_of_element_located(locator),
             message=f"Can't find element by locator {locator}",
@@ -32,6 +34,12 @@ class BasePage:
         return WebDriverWait(self.driver, timeout).until(
             EC.visibility_of_element_located(locator),
             message=f"Element with locator {locator} is not visible after {timeout} seconds",
+        )
+
+    def wait_element_to_be_clickable(self, *locator, timeout=10):
+        return WebDriverWait(self.driver, timeout).until(
+            EC.element_to_be_clickable(locator),
+            message=f"Element with locator {locator} is not clickable after {timeout} seconds",
         )
 
     def check_url_contains(self, expected_substring: str, timeout=10):
