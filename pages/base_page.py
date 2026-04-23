@@ -22,7 +22,7 @@ class BasePage:
     def open(self):
         self.driver.get(self.base_url)
 
-    def find_element(self, *locator, timeout=10):
+    def wait_and_find_element(self, *locator, timeout=10): # вместо обычного driver.find_element(), чтобы ждать пока страница загрузится.
         return WebDriverWait(self.driver, timeout).until(
             EC.presence_of_element_located(locator),
             message=f"Can't find element by locator {locator}",
@@ -41,22 +41,22 @@ class BasePage:
         )
 
     def fill_input(self, *locator, value: str):
-        input_element = self.find_element(*locator)
+        input_element = self.wait_and_find_element(*locator)
         input_element.clear()
         input_element.send_keys(value)
 
     def click_button(self, *locator):
-        button = self.find_element(*locator)
+        button = self.wait_and_find_element(*locator)
         button.click()
 
     def check_element_text_equals(self, *locator, expected_text: str):
-        element = self.find_element(*locator)
+        element = self.wait_and_find_element(*locator)
         assert element.text == expected_text, (
             f"Expected text '{expected_text}' but got '{element.text}'"
         )
 
     def check_element_text_contains(self, *locator, expected_text: str):
-        element = self.find_element(*locator)
+        element = self.wait_and_find_element(*locator)
         assert expected_text in element.text, (
             f"Expected text '{expected_text}' but got '{element.text}'"
         )
@@ -65,5 +65,5 @@ class BasePage:
         self.driver.execute_script("arguments[0].click();", element)
 
     def select_checkbox(self, *locator):
-        checkbox = self.find_element(*locator)
+        checkbox = self.wait_and_find_element(*locator)
         self.js_click(checkbox)

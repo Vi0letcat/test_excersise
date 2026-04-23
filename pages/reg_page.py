@@ -29,4 +29,4 @@ class RegistrationPage(BasePage):
         self.fill_input(*self.locators.full_name_input, value=full_name)
         self.select_checkbox(*self.locators.privacy_policy_checkbox)
         self.select_checkbox(*self.locators.agreement_checkbox)
-        self.js_click(self.find_element(*self.locators.submit_button))
+        self.js_click(self.wait_and_find_element(*self.locators.submit_button))

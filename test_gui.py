@@ -57,7 +57,7 @@ class TestTrueConf:
         ],
     )
     def test_download_options(self, download_page, title, expected_url, expected_text):
-        download_page.find_element(
+        download_page.wait_and_find_element(
             By.XPATH, f"//a/span[text()='{title}']"
         ).click()  # Ищем элемент с заголовкам ОС/среды. Ошибка если не находим, кликаем если находим.
         download_page.check_url_contains(expected_url)  # Проверяем урл
